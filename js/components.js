@@ -138,22 +138,30 @@ class ComponentBuilder {
         const projectsGrid = utils.$('#projects-grid');
         const projectsFilter = utils.$('.projects-filter');
         
+        console.log('buildProjectsSection called with:', projectsData);
+        
         if (!projectsGrid) {
+            console.log('Projects grid not found');
             return;
         }
 
         // Check if section is under construction
         if (projectsData && projectsData.underConstruction) {
+            console.log('Projects marked as under construction');
             this.showConstructionMessage(projectsGrid, projectsFilter);
             return;
         }
 
         const projects = projectsData?.projects || projectsData;
+        console.log('Extracted projects:', projects);
         
         if (!projects || projects.length === 0) {
+            console.log('No projects found, showing construction message');
             this.showConstructionMessage(projectsGrid, projectsFilter);
             return;
         }
+
+        console.log('Rendering', projects.length, 'projects');
 
         // Show filter if we have projects
         if (projectsFilter) {

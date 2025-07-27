@@ -1,4 +1,22 @@
 {
-  "underConstruction": true,
-  "projects": []
+  "underConstruction": false,
+  "projects": [
+    {
+      "id": 1,
+      "title": "SamFirmUpdater",
+      "description": "Alternative to original Samsung updater but it's for rooted devices. It allows users to download and decrypt original Samsung firmware, patch it (change kernel and patch vbmeta) and flash it to their devices.",
+      "image": "assets/projects/SamFirmUpdater/banner.png",
+      "technologies": ["Java", "Kotlin"],
+      "category": "Mobile",
+      "status": "In Progress",
+      "demoUrl": "#",
+      "githubUrl": "https://github.com/FixeQyt/SamFirmUpdater",
+      "features": [
+        "Download Samsung firmware",
+        "Decrypt original firmware",
+        "Patch firmware (change kernel and patch vbmeta)",
+        "Flash firmware to rooted devices"
+      ]
+    }
+  ]
 }

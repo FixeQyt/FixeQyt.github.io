@@ -65,14 +65,19 @@ class DataLoader {
     async loadProjectsData() {
         try {
             console.log('Loading projects data from: ./data/projects.json');
-            const data = await this.fetchData('./data/projects.json');
+            // Add timestamp to avoid caching issues during development
+            const url = './data/projects.json?t=' + Date.now();
+            const data = await this.fetchData(url, false); // Disable cache for projects
             console.log('Projects data loaded:', data);
-            return data.projects || [];
+            return data; // Return full data object including underConstruction flag
         } catch (error) {
             console.error('Failed to load projects data:', error);
             utils.errorHandler(error, 'DataLoader.loadProjectsData');
             // Return fallback data
-            return this.getFallbackProjectsData();
+            return { 
+                underConstruction: false, 
+                projects: this.getFallbackProjectsData() 
+            };
         }
     }
 
@@ -122,7 +127,7 @@ class DataLoader {
                 id: 1,
                 title: "Portfolio Website",
                 description: "Modern portfolio website with 3D animations and responsive design.",
-                image: "https://via.placeholder.com/600x400/0D1117/00D9FF?text=Portfolio",
+                image: "",
                 technologies: ["HTML5", "CSS3", "JavaScript"],
                 category: "Frontend",
                 status: "Completed",

@@ -51,9 +51,7 @@ class DataLoader {
         const trackLoading = window.loadingManager?.trackDataLoading('developer-data');
         
         try {
-            console.log('Loading developer data from: ./data/data.json');
             const data = await this.fetchData('./data/data.json');
-            console.log('Developer data loaded:', data);
             trackLoading?.(true);
             return data;
         } catch (error) {
@@ -70,11 +68,9 @@ class DataLoader {
         const trackLoading = window.loadingManager?.trackDataLoading('projects-data');
         
         try {
-            console.log('Loading projects data from: ./data/projects.json');
             // Add timestamp to avoid caching issues during development
             const url = './data/projects.json?t=' + Date.now();
             const data = await this.fetchData(url, false); // Disable cache for projects
-            console.log('Projects data loaded:', data);
             
             // Track project images for loading manager
             if (data.projects && window.loadingManager) {

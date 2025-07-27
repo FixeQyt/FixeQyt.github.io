@@ -50,7 +50,9 @@ class AnimationController {
 
     // Refresh animations for dynamically added elements
     refreshScrollAnimations() {
-        console.log('Refreshing scroll animations...');
+        if (CONFIG.DEBUG) {
+            console.log('Refreshing scroll animations...');
+        }
         
         // Find new elements that need animation
         const newElements = utils.$$('.skill-category, .project-card');
@@ -61,7 +63,9 @@ class AnimationController {
                 
                 // Check if element is in view immediately
                 if (utils.isInViewport(element, 0.1)) {
-                    console.log('Element is in viewport, triggering animation:', element);
+                    if (CONFIG.DEBUG) {
+                        console.log('Element is in viewport, triggering animation:', element);
+                    }
                     this.triggerAnimation(element);
                 } else {
                     // Observe for future scroll

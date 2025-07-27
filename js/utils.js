@@ -1,3 +1,23 @@
+// Configuration
+const CONFIG = {
+    DEBUG: false,
+    PERFORMANCE_LOGGING: false
+};
+
+// Debug logging helper
+const debugLog = (...args) => {
+    if (CONFIG.DEBUG) {
+        console.log(...args);
+    }
+};
+
+// Performance logging helper  
+const perfLog = (...args) => {
+    if (CONFIG.PERFORMANCE_LOGGING) {
+        console.log(...args);
+    }
+};
+
 // Utility functions for the portfolio
 
 // DOM utilities
@@ -192,7 +212,6 @@ const createParticle = (container, count = 50) => {
     }
 };
 
-// Advanced Loading Manager
 class LoadingManager {
     constructor() {
         this.resources = new Map();
@@ -202,6 +221,7 @@ class LoadingManager {
         this.callbacks = [];
         this.progressElement = null;
         this.statusElement = null;
+        this.maxLoadingTime = 5000; // 5 seconds timeout
         
         this.init();
     }
@@ -231,8 +251,8 @@ class LoadingManager {
         // Track all images on the page
         this.trackImages();
         
-        // Track fonts
-        this.trackFonts();
+        // Skip font tracking - fonts are not critical for loading completion
+        // this.trackFonts();
         
         // Track stylesheets
         this.trackStylesheets();
@@ -240,8 +260,28 @@ class LoadingManager {
         // Set initial status
         this.updateStatus('Initializing...');
         
+        // Setup timeout fallback
+        setTimeout(() => {
+            if (!this.isComplete) {
+                this.forceComplete();
+            }
+        }, this.maxLoadingTime);
+        
         // Check if everything is already loaded
         setTimeout(() => this.checkComplete(), 500);
+    }
+    
+    forceComplete() {
+        this.isComplete = true;
+        this.updateStatus('Ready!');
+        
+        if (this.progressElement) {
+            this.progressElement.style.width = '100%';
+        }
+        
+        setTimeout(() => {
+            this.callbacks.forEach(callback => callback());
+        }, 100);
     }
     
     trackImages() {
@@ -286,15 +326,54 @@ class LoadingManager {
     trackFonts() {
         // Track Google Fonts
         if (document.fonts) {
-            document.fonts.addEventListener('loadingdone', () => {
-                this.onResourceLoaded('fonts', 'google-fonts');
-            });
+            // Check if fonts are already loaded
+            if (document.fonts.status === 'loaded') {
+                if (CONFIG.DEBUG) {
+                    console.log('Google Fonts already loaded');
+                }
+                return; // Don't add to resources if already loaded
+            }
             
-            document.fonts.addEventListener('loadingerror', () => {
-                this.onResourceLoaded('fonts', 'google-fonts');
-            });
-            
+            // Add to resources to track
             this.addResource('fonts', 'google-fonts');
+            
+            const fontsLoadedHandler = () => {
+                if (CONFIG.DEBUG) {
+                    console.log('Google Fonts loaded successfully');
+                }
+                this.onResourceLoaded('fonts:google-fonts');
+            };
+            
+            const fontsErrorHandler = () => {
+                if (CONFIG.DEBUG) {
+                    console.log('Google Fonts failed to load or timeout');
+                }
+                this.onResourceLoaded('fonts:google-fonts');
+            };
+            
+            // Check if fonts are ready immediately
+            document.fonts.ready.then(() => {
+                if (CONFIG.DEBUG) {
+                    console.log('Google Fonts ready via promise');
+                }
+                this.onResourceLoaded('fonts:google-fonts');
+            }).catch(() => {
+                if (CONFIG.DEBUG) {
+                    console.log('Google Fonts promise rejected');
+                }
+                this.onResourceLoaded('fonts:google-fonts');
+            });
+            
+            // Fallback timeout for fonts (2 seconds)
+            setTimeout(() => {
+                if (this.resources.has('fonts:google-fonts') && 
+                    !this.resources.get('fonts:google-fonts').loaded) {
+                    if (CONFIG.DEBUG) {
+                        console.log('Font loading timeout, marking as complete');
+                    }
+                    this.onResourceLoaded('fonts:google-fonts');
+                }
+            }, 2000);
         }
     }
     
@@ -309,7 +388,9 @@ class LoadingManager {
     
     addResource(type, url, element = null) {
         const key = `${type}:${url}`;
-        if (this.resources.has(key)) return;
+        if (this.resources.has(key)) {
+            return;
+        }
         
         this.resources.set(key, {
             type,
@@ -333,6 +414,9 @@ class LoadingManager {
             case 'fonts':
                 // Fonts are handled by the fonts API
                 break;
+            case 'data':
+                // Data loading is tracked externally
+                break;
         }
     }
     
@@ -340,12 +424,23 @@ class LoadingManager {
         const img = new Image();
         img.onload = () => this.onResourceLoaded(key);
         img.onerror = () => this.onResourceLoaded(key); // Still count as loaded even if failed
-        img.src = url;
+        
+        // Check if image is already cached/loaded
+        if (img.complete) {
+            setTimeout(() => this.onResourceLoaded(key), 0);
+        } else {
+            img.src = url;
+        }
     }
     
     loadStylesheet(element, key) {
-        if (element.sheet || element.readyState === 'complete') {
+        if (!element) {
             this.onResourceLoaded(key);
+            return;
+        }
+        
+        if (element.sheet || element.readyState === 'complete') {
+            setTimeout(() => this.onResourceLoaded(key), 0);
         } else {
             element.onload = () => this.onResourceLoaded(key);
             element.onerror = () => this.onResourceLoaded(key);
@@ -354,16 +449,21 @@ class LoadingManager {
     
     onResourceLoaded(key) {
         if (this.resources.has(key)) {
-            this.resources.get(key).loaded = true;
+            const resource = this.resources.get(key);
+            // Only increment if not already loaded to prevent double counting
+            if (!resource.loaded) {
+                resource.loaded = true;
+                this.loadedResources++;
+                this.updateProgress();
+            }
         }
         
-        this.loadedResources++;
-        this.updateProgress();
         this.checkComplete();
     }
     
     updateProgress() {
-        const progress = this.totalResources > 0 ? (this.loadedResources / this.totalResources) * 100 : 0;
+        const progress = this.totalResources > 0 ? 
+            Math.min(100, (this.loadedResources / this.totalResources) * 100) : 0;
         
         if (this.progressElement) {
             this.progressElement.style.width = `${progress}%`;
@@ -387,7 +487,12 @@ class LoadingManager {
         if (allLoaded && documentReady) {
             this.isComplete = true;
             this.updateStatus('Complete!');
-            this.updateProgress(); // Ensure 100% is shown
+            
+            // Force 100% progress display
+            if (this.progressElement) {
+                this.progressElement.style.width = '100%';
+            }
+            this.updateStatus('Complete!');
             
             setTimeout(() => {
                 this.callbacks.forEach(callback => callback());
@@ -420,6 +525,25 @@ class LoadingManager {
     
     getProgress() {
         return this.totalResources > 0 ? (this.loadedResources / this.totalResources) * 100 : 0;
+    }
+    
+    // Debug function to see what resources are being tracked
+    getDebugInfo() {
+        const info = {
+            total: this.totalResources,
+            loaded: this.loadedResources,
+            progress: this.getProgress(),
+            resources: Array.from(this.resources.entries()).map(([key, resource]) => ({
+                key,
+                type: resource.type,
+                url: resource.url,
+                loaded: resource.loaded
+            }))
+        };
+        if (CONFIG.DEBUG) {
+            console.table(info.resources);
+        }
+        return info;
     }
 }
 

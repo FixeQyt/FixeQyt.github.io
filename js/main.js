@@ -37,7 +37,9 @@ class PortfolioApp {
             utils.performanceMonitor.mark('app-init-end');
             utils.performanceMonitor.measure('app-init-time', 'app-init-start', 'app-init-end');
             
-            console.log(`Portfolio loaded in ${utils.performanceMonitor.getLoadTime().toFixed(2)}ms`);
+            if (CONFIG.DEBUG) {
+                console.log(`Portfolio loaded in ${utils.performanceMonitor.getLoadTime().toFixed(2)}ms`);
+            }
             
         } catch (error) {
             utils.errorHandler(error, 'PortfolioApp.init');
@@ -47,30 +49,19 @@ class PortfolioApp {
 
     async initializeComponents() {
         // Wait for all components to be available
-        console.log('Waiting for components to be ready...');
         
         // Wait for components with retry logic
         let retries = 0;
         const maxRetries = 10;
         
         while (retries < maxRetries) {
-            console.log(`Component check attempt ${retries + 1}/${maxRetries}`);
-            
             if (window.dataManager && window.componentBuilder && window.navigationController) {
-                console.log('All required components are ready!');
                 break;
             }
             
             retries++;
             await new Promise(resolve => setTimeout(resolve, 200));
         }
-        
-        console.log('Checking component availability...');
-        console.log('dataManager:', typeof window.dataManager);
-        console.log('componentBuilder:', typeof window.componentBuilder);
-        console.log('navigationController:', typeof window.navigationController);
-        console.log('animationController:', typeof window.animationController);
-        console.log('threeScene:', typeof window.threeScene);
         
         this.components.set('dataManager', window.dataManager);
         this.components.set('componentBuilder', window.componentBuilder);
@@ -84,37 +75,28 @@ class PortfolioApp {
 
     async loadData() {
         try {
-            console.log('Starting data load...');
             // Load all portfolio data
             const data = await window.dataManager.init();
-            console.log('Data manager initialized with:', data);
             
             // Update developer information
-            console.log('Updating developer info...');
             window.componentBuilder.updateDeveloperInfo(data.developer);
             
             // Build skills section
-            console.log('Building skills section with:', data.skills);
             window.componentBuilder.buildSkillsSection(data.skills);
             
             // Build projects section
             window.componentBuilder.buildProjectsSection(data.projectsData || data.projects);
             
             // Build social links
-            console.log('Building social links with:', data.socials);
             window.componentBuilder.buildSocialLinks(data.socials);
-            
-            console.log('Portfolio data loaded successfully:', data);
             
             // Refresh animations for newly created elements
             if (window.animationController && window.animationController.refreshScrollAnimations) {
-                console.log('Refreshing scroll animations for new elements...');
                 window.animationController.refreshScrollAnimations();
             }
             
             // Setup project filters after elements are created
             setTimeout(() => {
-                console.log('Re-setting up project filters after data load...');
                 this.setupProjectFilters();
             }, 100);
             
@@ -351,9 +333,7 @@ class PortfolioApp {
     }
 
     handleProjectFilter(category) {
-        console.log(`Filtering projects by category: ${category}`);
-        
-        // Analytics tracking
+            console.log('Performance Metrics:', metrics);        // Analytics tracking
         this.trackEvent('project_filter', { category });
     }
 
@@ -373,7 +353,9 @@ class PortfolioApp {
             window.gtag('event', eventName, parameters);
         }
         
-        console.log('Event tracked:', eventName, parameters);
+        if (CONFIG.DEBUG) {
+            console.log('Event tracked:', eventName, parameters);
+        }
     }
 
     logPerformanceMetrics() {

@@ -7,10 +7,7 @@ class ComponentBuilder {
 
     // Build skills section
     buildSkillsSection(skills) {
-        console.log('Building skills section...');
         const skillsGrid = utils.$('#skills-grid');
-        console.log('Skills grid element:', skillsGrid);
-        console.log('Skills data:', skills);
         
         if (!skillsGrid) {
             console.error('Skills grid element not found!');
@@ -25,19 +22,15 @@ class ComponentBuilder {
         skillsGrid.innerHTML = '';
 
         skills.forEach((skillCategory, index) => {
-            console.log(`Creating skill category ${index}:`, skillCategory);
             const categoryElement = this.createSkillCategory(skillCategory, index);
             skillsGrid.appendChild(categoryElement);
         });
-        
-        console.log('Skills section built successfully');
         
         // Force show elements if animations don't work
         setTimeout(() => {
             const skillElements = utils.$$('.skill-category');
             skillElements.forEach(element => {
                 if (!element.classList.contains('in-view')) {
-                    console.log('Force showing skill element:', element);
                     element.classList.add('in-view');
                 }
             });
@@ -138,30 +131,22 @@ class ComponentBuilder {
         const projectsGrid = utils.$('#projects-grid');
         const projectsFilter = utils.$('.projects-filter');
         
-        console.log('buildProjectsSection called with:', projectsData);
-        
         if (!projectsGrid) {
-            console.log('Projects grid not found');
             return;
         }
 
         // Check if section is under construction
         if (projectsData && projectsData.underConstruction) {
-            console.log('Projects marked as under construction');
             this.showConstructionMessage(projectsGrid, projectsFilter);
             return;
         }
 
         const projects = projectsData?.projects || projectsData;
-        console.log('Extracted projects:', projects);
         
         if (!projects || projects.length === 0) {
-            console.log('No projects found, showing construction message');
             this.showConstructionMessage(projectsGrid, projectsFilter);
             return;
         }
-
-        console.log('Rendering', projects.length, 'projects');
 
         // Show filter if we have projects
         if (projectsFilter) {

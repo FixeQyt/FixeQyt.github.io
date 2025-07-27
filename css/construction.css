@@ -1,0 +1,173 @@
+/* Construction Animation Styles */
+.construction-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 400px;
+    padding: var(--spacing-xl);
+    text-align: center;
+    background: var(--bg-card);
+    border: var(--border-glass);
+    border-radius: var(--radius-lg);
+    position: relative;
+    overflow: hidden;
+}
+
+.construction-container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: 
+        radial-gradient(circle at 30% 30%, rgba(74, 158, 255, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 70% 70%, rgba(231, 76, 60, 0.1) 0%, transparent 50%);
+    animation: constructionGlow 3s ease-in-out infinite alternate;
+}
+
+.construction-icon {
+    position: relative;
+    width: 120px;
+    height: 120px;
+    margin-bottom: var(--spacing-lg);
+}
+
+.gear {
+    position: absolute;
+    font-size: 2.5rem;
+    animation: spin 3s linear infinite;
+    filter: drop-shadow(0 0 10px var(--accent-primary));
+}
+
+.gear-1 {
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    animation-duration: 2s;
+    color: var(--accent-primary);
+}
+
+.gear-2 {
+    bottom: 0;
+    left: 0;
+    animation-duration: 3s;
+    animation-direction: reverse;
+    color: var(--accent-secondary);
+}
+
+.gear-3 {
+    bottom: 0;
+    right: 0;
+    animation-duration: 2.5s;
+    color: var(--accent-tertiary);
+}
+
+.construction-title {
+    font-size: var(--fs-h2);
+    font-family: var(--font-tech);
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: var(--spacing-md);
+    animation: pulse 2s ease-in-out infinite;
+}
+
+.construction-text {
+    font-size: var(--fs-body);
+    color: var(--text-secondary);
+    margin-bottom: var(--spacing-xl);
+    max-width: 400px;
+    line-height: 1.6;
+}
+
+.construction-progress {
+    width: 100%;
+    max-width: 300px;
+}
+
+.progress-bar {
+    width: 100%;
+    height: 8px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 4px;
+    overflow: hidden;
+    position: relative;
+}
+
+.progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--accent-primary), var(--accent-secondary), var(--accent-primary));
+    background-size: 200% 100%;
+    border-radius: 4px;
+    animation: progressFlow 2s ease-in-out infinite, progressFill 3s ease-in-out infinite alternate;
+}
+
+/* Animations */
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes pulse {
+    0%, 100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+    50% {
+        opacity: 0.8;
+        transform: scale(1.02);
+    }
+}
+
+@keyframes constructionGlow {
+    0% {
+        opacity: 0.3;
+    }
+    100% {
+        opacity: 0.6;
+    }
+}
+
+@keyframes progressFlow {
+    0% {
+        background-position: 200% 0;
+    }
+    100% {
+        background-position: -200% 0;
+    }
+}
+
+@keyframes progressFill {
+    0% {
+        width: 20%;
+    }
+    100% {
+        width: 80%;
+    }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .construction-container {
+        min-height: 300px;
+        padding: var(--spacing-lg);
+    }
+    
+    .construction-icon {
+        width: 80px;
+        height: 80px;
+    }
+    
+    .gear {
+        font-size: 1.8rem;
+    }
+    
+    .construction-title {
+        font-size: var(--fs-h3);
+    }
+}

@@ -1,0 +1,104 @@
+{
+  "developer": {
+    "name": "Paweł Sobczak",
+    "nickname": "FixeQ",
+    "title": "Full Stack Developer",
+    "tagline": "Crafting Digital Experiences with Code",
+    "description": "Passionate full-stack developer specializing in modern web technologies, mobile development, and creating innovative digital solutions. I love working with cutting-edge frameworks and building applications that make a difference.",
+    "avatar": "assets/avatar.jpg",
+    "location": "Arch Linux Enthusiast",
+    "experience": "3+ Years",
+    "projectsCompleted": "25+",
+    "technologiesMastered": "15+"
+  },
+  "skills": [
+    {
+      "category": "Frontend",
+      "technologies": [
+        {
+          "name": "JavaScript",
+          "level": 95,
+          "icon": "⚡",
+          "color": "#F7DF1E"
+        },
+        {
+          "name": "HTML5",
+          "level": 90,
+          "icon": "🌐",
+          "color": "#E34F26"
+        },
+        {
+          "name": "CSS3",
+          "level": 88,
+          "icon": "🎨",
+          "color": "#1572B6"
+        }
+      ]
+    },
+    {
+      "category": "Backend",
+      "technologies": [
+        {
+          "name": "Node.js",
+          "level": 92,
+          "icon": "🚀",
+          "color": "#339933"
+        },
+        {
+          "name": "Python",
+          "level": 85,
+          "icon": "🐍",
+          "color": "#3776AB"
+        }
+      ]
+    },
+    {
+      "category": "Mobile",
+      "technologies": [
+        {
+          "name": "Java (Android)",
+          "level": 80,
+          "icon": "📱",
+          "color": "#007396"
+        }
+      ]
+    },
+    {
+      "category": "Tools & OS",
+      "technologies": [
+        {
+          "name": "Arch Linux",
+          "level": 88,
+          "icon": "🐧",
+          "color": "#1793D1"
+        },
+        {
+          "name": "Git",
+          "level": 85,
+          "icon": "📦",
+          "color": "#F05032"
+        }
+      ]
+    }
+  ],
+  "socials": [
+    {
+      "name": "GitHub",
+      "url": "https://github.com/FixeQyt",
+      "icon": "github",
+      "color": "#00D9FF"
+    },
+    {
+      "name": "Threads",
+      "url": "https://threads.com/@fixeq.dev",
+      "icon": "threads",
+      "color": "#FF0080"
+    },
+    {
+      "name": "Instagram",
+      "url": "https://instagram.com/fixeq.dev",
+      "icon": "instagram",
+      "color": "#E4405F"
+    }
+  ]
+}

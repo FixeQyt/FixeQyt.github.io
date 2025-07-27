@@ -1,0 +1,83 @@
+/* CSS Variables */
+:root {
+    /* Colors */
+    --bg-primary: #0a0a0f;
+    --bg-secondary: #0d1117;
+    --bg-tertiary: #161b22;
+    --bg-card: rgba(13, 17, 23, 0.8);
+    --bg-glass: rgba(255, 255, 255, 0.05);
+    
+    /* Text Colors */
+    --text-primary: #ffffff;
+    --text-secondary: #b3b3b3;
+    --text-muted: #666666;
+    
+    /* Accent Colors - Toned down */
+    --accent-primary: #4a9eff;
+    --accent-secondary: #e74c3c;
+    --accent-tertiary: #2ecc71;
+    --accent-warning: #f39c12;
+    --accent-purple: #9b59b6;
+    
+    /* Gradients - More subtle */
+    --gradient-primary: linear-gradient(135deg, #4a9eff 0%, #6c5ce7 100%);
+    --gradient-secondary: linear-gradient(135deg, #e74c3c 0%, #9b59b6 100%);
+    --gradient-tertiary: linear-gradient(135deg, #2ecc71 0%, #4a9eff 100%);
+    --gradient-bg: linear-gradient(135deg, #0a0a0f 0%, #0d1117 50%, #161b22 100%);
+    
+    /* Shadows - Softer glows */
+    --shadow-glow: 0 0 15px rgba(74, 158, 255, 0.2);
+    --shadow-glow-pink: 0 0 15px rgba(231, 76, 60, 0.2);
+    --shadow-glow-green: 0 0 15px rgba(46, 204, 113, 0.2);
+    --shadow-card: 0 8px 32px rgba(0, 0, 0, 0.3);
+    --shadow-heavy: 0 20px 60px rgba(0, 0, 0, 0.5);
+    
+    /* Borders - Softer glows */
+    --border-glow: 1px solid rgba(74, 158, 255, 0.2);
+    --border-glow-pink: 1px solid rgba(231, 76, 60, 0.2);
+    --border-glass: 1px solid rgba(255, 255, 255, 0.1);
+    
+    /* Typography */
+    --font-primary: 'Rajdhani', sans-serif;
+    --font-tech: 'Orbitron', monospace;
+    
+    /* Font Sizes */
+    --fs-hero: clamp(3rem, 8vw, 6rem);
+    --fs-h1: clamp(2.5rem, 6vw, 4rem);
+    --fs-h2: clamp(2rem, 5vw, 3rem);
+    --fs-h3: clamp(1.5rem, 4vw, 2rem);
+    --fs-body: clamp(1rem, 2vw, 1.2rem);
+    --fs-small: clamp(0.8rem, 1.5vw, 1rem);
+    
+    /* Spacing */
+    --spacing-xs: 0.5rem;
+    --spacing-sm: 1rem;
+    --spacing-md: 2rem;
+    --spacing-lg: 3rem;
+    --spacing-xl: 4rem;
+    --spacing-xxl: 6rem;
+    
+    /* Layout */
+    --container-max-width: 1200px;
+    --container-padding: 2rem;
+    --header-height: 80px;
+    
+    /* Border Radius */
+    --radius-sm: 8px;
+    --radius-md: 12px;
+    --radius-lg: 16px;
+    --radius-xl: 24px;
+    
+    /* Transitions */
+    --transition-fast: 0.2s ease;
+    --transition-normal: 0.3s ease;
+    --transition-slow: 0.5s ease;
+    --transition-bounce: 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    
+    /* Z-Index */
+    --z-loading: 9999;
+    --z-modal: 1000;
+    --z-nav: 100;
+    --z-fixed: 50;
+    --z-base: 1;
+}

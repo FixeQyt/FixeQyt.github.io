@@ -192,6 +192,240 @@ const createParticle = (container, count = 50) => {
     }
 };
 
+// Advanced Loading Manager
+class LoadingManager {
+    constructor() {
+        this.resources = new Map();
+        this.totalResources = 0;
+        this.loadedResources = 0;
+        this.isComplete = false;
+        this.callbacks = [];
+        this.progressElement = null;
+        this.statusElement = null;
+        
+        this.init();
+    }
+    
+    init() {
+        // Get loading screen elements (with delay to ensure DOM is ready)
+        setTimeout(() => {
+            const loadingScreen = $('#loading-screen');
+            if (loadingScreen) {
+                this.progressElement = loadingScreen.querySelector('.loading-progress');
+                this.statusElement = loadingScreen.querySelector('.loading-status') || 
+                                   loadingScreen.querySelector('.logo-text');
+            }
+        }, 100);
+        
+        // Wait for DOM to be ready before tracking resources
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', () => {
+                this.trackResources();
+            });
+        } else {
+            this.trackResources();
+        }
+    }
+    
+    trackResources() {
+        // Track all images on the page
+        this.trackImages();
+        
+        // Track fonts
+        this.trackFonts();
+        
+        // Track stylesheets
+        this.trackStylesheets();
+        
+        // Set initial status
+        this.updateStatus('Initializing...');
+        
+        // Check if everything is already loaded
+        setTimeout(() => this.checkComplete(), 500);
+    }
+    
+    trackImages() {
+        // Find all images in HTML and CSS
+        const images = document.querySelectorAll('img');
+        const backgroundImages = [];
+        
+        // Check for CSS background images
+        const elements = document.querySelectorAll('*');
+        elements.forEach(el => {
+            const style = window.getComputedStyle(el);
+            const bgImage = style.backgroundImage;
+            if (bgImage && bgImage !== 'none' && bgImage.includes('url(')) {
+                const matches = bgImage.match(/url\(['"]?([^'")]+)['"]?\)/g);
+                if (matches) {
+                    matches.forEach(match => {
+                        const url = match.match(/url\(['"]?([^'")]+)['"]?\)/)[1];
+                        if (!url.startsWith('data:')) {
+                            backgroundImages.push(url);
+                        }
+                    });
+                }
+            }
+        });
+        
+        // Track regular images
+        images.forEach(img => {
+            if (img.src && !img.src.startsWith('data:')) {
+                this.addResource('image', img.src, img);
+            }
+        });
+        
+        // Track background images
+        backgroundImages.forEach(src => {
+            this.addResource('background-image', src);
+        });
+        
+        // Track avatar image and project images from data
+        this.addResource('image', 'assets/avatar.jpg');
+    }
+    
+    trackFonts() {
+        // Track Google Fonts
+        if (document.fonts) {
+            document.fonts.addEventListener('loadingdone', () => {
+                this.onResourceLoaded('fonts', 'google-fonts');
+            });
+            
+            document.fonts.addEventListener('loadingerror', () => {
+                this.onResourceLoaded('fonts', 'google-fonts');
+            });
+            
+            this.addResource('fonts', 'google-fonts');
+        }
+    }
+    
+    trackStylesheets() {
+        const stylesheets = document.querySelectorAll('link[rel="stylesheet"]');
+        stylesheets.forEach(link => {
+            if (link.href) {
+                this.addResource('stylesheet', link.href, link);
+            }
+        });
+    }
+    
+    addResource(type, url, element = null) {
+        const key = `${type}:${url}`;
+        if (this.resources.has(key)) return;
+        
+        this.resources.set(key, {
+            type,
+            url,
+            loaded: false,
+            element
+        });
+        
+        this.totalResources++;
+        this.updateStatus(`Loading ${type}...`);
+        
+        // Start loading based on type
+        switch (type) {
+            case 'image':
+            case 'background-image':
+                this.loadImage(url, key);
+                break;
+            case 'stylesheet':
+                this.loadStylesheet(element, key);
+                break;
+            case 'fonts':
+                // Fonts are handled by the fonts API
+                break;
+        }
+    }
+    
+    loadImage(url, key) {
+        const img = new Image();
+        img.onload = () => this.onResourceLoaded(key);
+        img.onerror = () => this.onResourceLoaded(key); // Still count as loaded even if failed
+        img.src = url;
+    }
+    
+    loadStylesheet(element, key) {
+        if (element.sheet || element.readyState === 'complete') {
+            this.onResourceLoaded(key);
+        } else {
+            element.onload = () => this.onResourceLoaded(key);
+            element.onerror = () => this.onResourceLoaded(key);
+        }
+    }
+    
+    onResourceLoaded(key) {
+        if (this.resources.has(key)) {
+            this.resources.get(key).loaded = true;
+        }
+        
+        this.loadedResources++;
+        this.updateProgress();
+        this.checkComplete();
+    }
+    
+    updateProgress() {
+        const progress = this.totalResources > 0 ? (this.loadedResources / this.totalResources) * 100 : 0;
+        
+        if (this.progressElement) {
+            this.progressElement.style.width = `${progress}%`;
+        }
+        
+        this.updateStatus(`Loading... ${Math.round(progress)}%`);
+    }
+    
+    updateStatus(status) {
+        if (this.statusElement) {
+            this.statusElement.textContent = status;
+        }
+    }
+    
+    checkComplete() {
+        if (this.isComplete) return;
+        
+        const allLoaded = this.loadedResources >= this.totalResources && this.totalResources > 0;
+        const documentReady = document.readyState === 'complete';
+        
+        if (allLoaded && documentReady) {
+            this.isComplete = true;
+            this.updateStatus('Complete!');
+            this.updateProgress(); // Ensure 100% is shown
+            
+            setTimeout(() => {
+                this.callbacks.forEach(callback => callback());
+            }, 300);
+        } else if (this.totalResources === 0 && documentReady) {
+            // Fallback if no resources to track
+            setTimeout(() => {
+                this.isComplete = true;
+                this.updateStatus('Ready!');
+                this.callbacks.forEach(callback => callback());
+            }, 1000);
+        }
+    }
+    
+    // Method to track JSON/data loading
+    trackDataLoading(name) {
+        this.addResource('data', name);
+        return (success = true) => {
+            this.onResourceLoaded(`data:${name}`);
+        };
+    }
+    
+    onComplete(callback) {
+        if (this.isComplete) {
+            callback();
+        } else {
+            this.callbacks.push(callback);
+        }
+    }
+    
+    getProgress() {
+        return this.totalResources > 0 ? (this.loadedResources / this.totalResources) * 100 : 0;
+    }
+}
+
+// Create global loading manager
+window.loadingManager = new LoadingManager();
+
 // Loading screen handler
 const showLoadingScreen = () => {
     const loadingScreen = $('#loading-screen');
@@ -208,7 +442,7 @@ const hideLoadingScreen = () => {
             setTimeout(() => {
                 loadingScreen.style.display = 'none';
             }, 500);
-        }, 1000);
+        }, 300);
     }
 };
 

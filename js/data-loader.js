@@ -48,14 +48,18 @@ class DataLoader {
 
     // Load developer data
     async loadDeveloperData() {
+        const trackLoading = window.loadingManager?.trackDataLoading('developer-data');
+        
         try {
             console.log('Loading developer data from: ./data/data.json');
             const data = await this.fetchData('./data/data.json');
             console.log('Developer data loaded:', data);
+            trackLoading?.(true);
             return data;
         } catch (error) {
             console.error('Failed to load developer data:', error);
             utils.errorHandler(error, 'DataLoader.loadDeveloperData');
+            trackLoading?.(false);
             // Return fallback data
             return this.getFallbackDeveloperData();
         }
@@ -63,16 +67,30 @@ class DataLoader {
 
     // Load projects data
     async loadProjectsData() {
+        const trackLoading = window.loadingManager?.trackDataLoading('projects-data');
+        
         try {
             console.log('Loading projects data from: ./data/projects.json');
             // Add timestamp to avoid caching issues during development
             const url = './data/projects.json?t=' + Date.now();
             const data = await this.fetchData(url, false); // Disable cache for projects
             console.log('Projects data loaded:', data);
+            
+            // Track project images for loading manager
+            if (data.projects && window.loadingManager) {
+                data.projects.forEach(project => {
+                    if (project.image) {
+                        window.loadingManager.addResource('image', project.image);
+                    }
+                });
+            }
+            
+            trackLoading?.(true);
             return data; // Return full data object including underConstruction flag
         } catch (error) {
             console.error('Failed to load projects data:', error);
             utils.errorHandler(error, 'DataLoader.loadProjectsData');
+            trackLoading?.(false);
             // Return fallback data
             return { 
                 underConstruction: false, 

@@ -216,16 +216,19 @@ class PortfolioApp {
     }
 
     completeLoading() {
-        const loadingTime = performance.now() - this.loadingStartTime;
-        
-        // Hide loading screen after minimum display time
-        const minLoadingTime = 2000;
-        const remainingTime = Math.max(0, minLoadingTime - loadingTime);
-        
-        setTimeout(() => {
-            utils.hideLoadingScreen();
-            this.onLoadingComplete();
-        }, remainingTime);
+        // Wait for all resources to load
+        window.loadingManager.onComplete(() => {
+            const loadingTime = performance.now() - this.loadingStartTime;
+            
+            // Ensure minimum loading time for smooth UX (optional)
+            const minLoadingTime = 1000;
+            const remainingTime = Math.max(0, minLoadingTime - loadingTime);
+            
+            setTimeout(() => {
+                utils.hideLoadingScreen();
+                this.onLoadingComplete();
+            }, remainingTime);
+        });
     }
 
     onLoadingComplete() {

@@ -205,7 +205,18 @@ section {
     background: var(--gradient-primary);
     width: 0%;
     border-radius: 2px;
-    animation: loading 2s ease-in-out forwards;
+    transition: width 0.3s ease;
+}
+
+.loading-details {
+    margin-top: var(--spacing-md);
+}
+
+.loading-status {
+    font-family: var(--font-primary);
+    font-size: var(--fs-sm);
+    color: var(--text-secondary);
+    opacity: 0.8;
 }
 
 /* Utilities */

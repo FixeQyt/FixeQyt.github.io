@@ -61,6 +61,7 @@
     --container-max-width: 1200px;
     --container-padding: 2rem;
     --header-height: 80px;
+    --vh: 1vh; /* Will be updated by JavaScript for mobile browsers */
     
     /* Border Radius */
     --radius-sm: 8px;

@@ -1,10 +1,74 @@
 /* Base Styles */
+* {
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+    -webkit-tap-highlight-color: transparent;
+}
+
 body {
     background: var(--gradient-bg);
     color: var(--text-primary);
     font-family: var(--font-primary);
     min-height: 100vh;
     position: relative;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    overscroll-behavior: none;
+}
+
+/* Touch optimizations */
+button, .btn, .nav-link, .social-link, .filter-btn {
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+    user-select: none;
+    -webkit-user-select: none;
+}
+
+/* Improved focus states for accessibility */
+button:focus-visible, 
+.btn:focus-visible, 
+.nav-link:focus-visible,
+.social-link:focus-visible,
+.filter-btn:focus-visible {
+    outline: 2px solid var(--accent-primary);
+    outline-offset: 2px;
+}
+
+/* Ensure interactive elements have adequate touch targets */
+.btn, .nav-link, .social-link, .filter-btn {
+    min-height: 44px;
+    min-width: 44px;
+}
+
+/* Image optimizations */
+img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    object-fit: cover;
+    -webkit-user-drag: none;
+    -khtml-user-drag: none;
+    -moz-user-drag: none;
+    -o-user-drag: none;
+    user-select: none;
+}
+
+/* Performance optimizations */
+.card, .project-card, .skill-category {
+    will-change: transform;
+    transform: translateZ(0);
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+}
+
+/* Smooth scrolling for all links */
+a[href^="#"] {
+    scroll-behavior: smooth;
 }
 
 /* Container */
@@ -115,6 +179,17 @@ section {
     cursor: pointer;
     border: none;
     text-decoration: none;
+    /* Touch optimizations */
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background-clip: padding-box;
+}
+
+/* Active state for touch devices */
+.btn:active {
+    transform: translateY(1px);
+    transition: transform 0.1s ease;
 }
 
 .btn::before {
@@ -141,6 +216,24 @@ section {
 .btn-primary:hover {
     transform: translateY(-2px);
     box-shadow: 0 0 30px rgba(0, 217, 255, 0.5);
+}
+
+/* Touch devices: use :active instead of :hover for feedback */
+@media (hover: none) {
+    .btn:hover {
+        transform: none;
+        box-shadow: var(--shadow-glow);
+    }
+    
+    .btn-primary:active {
+        transform: scale(0.98);
+        box-shadow: 0 0 20px rgba(0, 217, 255, 0.4);
+    }
+    
+    .card:hover {
+        transform: none;
+        box-shadow: var(--shadow-card);
+    }
 }
 
 .btn-outline {

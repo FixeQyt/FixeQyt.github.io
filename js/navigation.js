@@ -19,14 +19,21 @@ class NavigationController {
         this.setupScrollSpy();
         this.setupSmoothScrolling();
         this.updateActiveLink();
+        this.updateViewportDimensions();
     }
 
     setupEventListeners() {
         // Hamburger menu toggle
         if (this.navHamburger) {
-            this.navHamburger.addEventListener('click', () => {
+            this.navHamburger.addEventListener('click', (e) => {
+                e.preventDefault();
                 this.toggleMobileMenu();
             });
+            
+            // Touch events for better mobile experience
+            this.navHamburger.addEventListener('touchstart', (e) => {
+                e.preventDefault();
+            }, { passive: false });
         }
 
         // Close menu when clicking outside
@@ -43,21 +50,52 @@ class NavigationController {
             }
         });
 
+        // Orientation change handler
+        window.addEventListener('orientationchange', () => {
+            setTimeout(() => {
+                this.handleOrientationChange();
+            }, 100);
+        });
+
+        // Resize handler with debouncing
+        const resizeHandler = utils.debounce(() => {
+            this.handleResize();
+        }, 250);
+        
+        window.addEventListener('resize', resizeHandler);
+
         // Scroll handler for navbar styling
         const scrollHandler = utils.throttle(() => {
             this.handleScroll();
         }, 16);
 
         window.addEventListener('scroll', scrollHandler);
-
-        // Resize handler
-        const resizeHandler = utils.debounce(() => {
-            if (window.innerWidth > 768 && this.isMenuOpen) {
-                this.closeMobileMenu();
-            }
-        }, 250);
-
-        window.addEventListener('resize', resizeHandler);
+    }
+    
+    handleOrientationChange() {
+        // Close mobile menu on orientation change
+        if (this.isMenuOpen) {
+            this.closeMobileMenu();
+        }
+        
+        // Recalculate viewport dimensions
+        this.updateViewportDimensions();
+    }
+    
+    handleResize() {
+        // Close mobile menu when screen becomes larger
+        if (window.innerWidth > 768 && this.isMenuOpen) {
+            this.closeMobileMenu();
+        }
+        
+        // Update viewport dimensions
+        this.updateViewportDimensions();
+    }
+    
+    updateViewportDimensions() {
+        // Update CSS custom properties for viewport dimensions
+        const vh = window.innerHeight * 0.01;
+        document.documentElement.style.setProperty('--vh', `${vh}px`);
     }
 
     setupScrollSpy() {

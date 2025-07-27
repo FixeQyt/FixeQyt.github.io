@@ -1,6 +1,7 @@
 /* Hero Section */
 .hero {
     height: 100vh;
+    height: calc(var(--vh, 1vh) * 100); /* Use custom property for mobile browsers */
     display: flex;
     align-items: center;
     justify-content: center;

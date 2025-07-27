@@ -9,6 +9,9 @@
     z-index: var(--z-nav);
     transition: all var(--transition-normal);
     height: var(--header-height);
+    /* Prevent scrolling issues on mobile */
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
 }
 
 .navbar.scrolled {
@@ -48,6 +51,10 @@
     border-radius: var(--radius-sm);
     transition: all var(--transition-normal);
     position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
 }
 
 .nav-link::before {
@@ -72,11 +79,19 @@
     width: 100%;
 }
 
+/* Touch-friendly hamburger menu */
 .nav-hamburger {
     display: none;
     flex-direction: column;
     cursor: pointer;
     gap: 4px;
+    padding: var(--spacing-xs);
+    border-radius: var(--radius-sm);
+    transition: background-color var(--transition-normal);
+}
+
+.nav-hamburger:hover {
+    background: rgba(255, 255, 255, 0.1);
 }
 
 .nav-hamburger .bar {

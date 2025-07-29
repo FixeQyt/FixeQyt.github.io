@@ -5,7 +5,25 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="FixeQ's GitHub contribution statistics showing repositories, commits, and activity">
   <title>FixeQ - GitHub Stats</title>
+  
+  <meta property="og:image" content="https://github-readme-stats.vercel.app/api?username=FixeQyt&show_icons=true&theme=transparent&border_color=C0C0C0&hide=stars&icon_color=999999&rank_icon=github" />
+  <meta property="og:image:type" content="image/svg+xml" />
+  <meta name="twitter:image" content="https://github-readme-stats.vercel.app/api?username=FixeQyt&show_icons=true&theme=transparent&border_color=C0C0C0&hide=stars&icon_color=999999&rank_icon=github" />
+  
   <link rel="stylesheet" href="../css/stats.css">
+  
+  <script>
+    const isGitHubOrBot = document.referrer.includes('github.com') || 
+                          navigator.userAgent.toLowerCase().includes('bot') ||
+                          window.location.search.includes('raw=true') ||
+                          window.location.search.includes('image=true');
+    
+    if (isGitHubOrBot) {
+      window.location.replace('https://github-readme-stats.vercel.app/api?username=FixeQyt&show_icons=true&theme=transparent&border_color=C0C0C0&hide=stars&icon_color=999999&rank_icon=github&');
+    } else {
+      document.documentElement.classList.remove('no-style');
+    }
+  </script>
   <script src="../js/stats.js"></script>
 </head>
 <body>

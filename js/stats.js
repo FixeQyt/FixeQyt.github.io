@@ -24,7 +24,10 @@ class GitHubStatsPage {
    * Detect if page is loaded from GitHub and apply no-style class
    */
   detectReferrer() {
-    if (document.referrer.includes("github.com")) {
+    const referrer = document.referrer.toLowerCase();
+    const isFromGitHub = referrer.includes('github') && !referrer.includes('github.io');
+    
+    if (isFromGitHub) {
       document.documentElement.classList.add('no-style');
       this.isFromGitHub = true;
       this.hideCredits();
@@ -324,7 +327,8 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 // Legacy support for existing inline script behavior
-if (document.referrer.includes("github.com")) {
+const referrer = document.referrer.toLowerCase();
+if (referrer.includes('github') && !referrer.includes('github.io')) {
   document.documentElement.classList.add('no-style');
 }
 

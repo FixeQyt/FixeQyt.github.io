@@ -13,13 +13,11 @@
   <link rel="stylesheet" href="../css/stats.css">
   
   <script>
-    const isGitHubOrBot = document.referrer.includes('github.com') || 
-                          navigator.userAgent.toLowerCase().includes('bot') ||
-                          window.location.search.includes('raw=true') ||
-                          window.location.search.includes('image=true');
+    const referrer = document.referrer.toLowerCase();
+    const isFromGitHubMaybeBot = referrer.includes('github') && !referrer.includes('github.io');
     
-    if (isGitHubOrBot) {
-      window.location.replace('https://github-readme-stats.vercel.app/api?username=FixeQyt&show_icons=true&theme=transparent&border_color=C0C0C0&hide=stars&icon_color=999999&rank_icon=github&');
+    if (isFromGitHubMaybeBot) {
+      window.location.replace('https://github-readme-stats.vercel.app/api?username=FixeQyt&show_icons=true&theme=transparent&border_color=C0C0C0&hide=stars&icon_color=999999&rank_icon=github&t=' + Date.now());
     } else {
       document.documentElement.classList.remove('no-style');
     }

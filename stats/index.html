@@ -6,6 +6,7 @@
   <meta name="description" content="FixeQ's GitHub contribution statistics showing repositories, commits, and activity">
   <title>FixeQ - GitHub Stats</title>
   
+  <!-- Meta tags dla social media i botów -->
   <meta property="og:image" content="https://github-readme-stats.vercel.app/api?username=FixeQyt&show_icons=true&theme=transparent&border_color=C0C0C0&hide=stars&icon_color=999999&rank_icon=github" />
   <meta property="og:image:type" content="image/svg+xml" />
   <meta name="twitter:image" content="https://github-readme-stats.vercel.app/api?username=FixeQyt&show_icons=true&theme=transparent&border_color=C0C0C0&hide=stars&icon_color=999999&rank_icon=github" />
@@ -14,10 +15,18 @@
   
   <script>
     const referrer = document.referrer.toLowerCase();
-    const isFromGitHubMaybeBot = referrer.includes('github') && !referrer.includes('github.io');
+    const userAgent = navigator.userAgent.toLowerCase();
+    const isFromGitHub = (referrer.includes('github') && !referrer.includes('github.io'));
     
-    if (isFromGitHubMaybeBot) {
-      window.location.replace('https://github-readme-stats.vercel.app/api?username=FixeQyt&show_icons=true&theme=transparent&border_color=C0C0C0&hide=stars&icon_color=999999&rank_icon=github&t=' + Date.now());
+    if (isFromGitHub) {
+      const imageUrl = 'https://github-readme-stats.vercel.app/api?username=FixeQyt&show_icons=true&theme=transparent&border_color=C0C0C0&hide=stars&icon_color=999999&rank_icon=github&t=' + Date.now();
+      
+      const metaRefresh = document.createElement('meta');
+      metaRefresh.setAttribute('http-equiv', 'refresh');
+      metaRefresh.setAttribute('content', '0; url=' + imageUrl);
+      document.head.appendChild(metaRefresh);
+      
+      window.location.replace(imageUrl);
     } else {
       document.documentElement.classList.remove('no-style');
     }

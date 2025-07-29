@@ -5,50 +5,21 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="FixeQ's GitHub contribution statistics showing repositories, commits, and activity">
   <title>FixeQ - GitHub Stats</title>
-  
-  <!-- Meta tags dla social media i botów -->
-  <meta property="og:image" content="https://github-readme-stats.vercel.app/api?username=FixeQyt&show_icons=true&theme=transparent&border_color=C0C0C0&hide=stars&icon_color=999999&rank_icon=github" />
-  <meta property="og:image:type" content="image/svg+xml" />
-  <meta name="twitter:image" content="https://github-readme-stats.vercel.app/api?username=FixeQyt&show_icons=true&theme=transparent&border_color=C0C0C0&hide=stars&icon_color=999999&rank_icon=github" />
-  
   <link rel="stylesheet" href="../css/stats.css">
-  
-  <script>
-    const referrer = document.referrer.toLowerCase();
-    const userAgent = navigator.userAgent.toLowerCase();
-    const isFromGitHub = (referrer.includes('github') && !referrer.includes('github.io'));
-    
-    if (isFromGitHub) {
-      const imageUrl = 'https://github-readme-stats.vercel.app/api?username=FixeQyt&show_icons=true&theme=transparent&border_color=C0C0C0&hide=stars&icon_color=999999&rank_icon=github&t=' + Date.now();
-      
-      const metaRefresh = document.createElement('meta');
-      metaRefresh.setAttribute('http-equiv', 'refresh');
-      metaRefresh.setAttribute('content', '0; url=' + imageUrl);
-      document.head.appendChild(metaRefresh);
-      
-      window.location.replace(imageUrl);
-    } else {
-      document.documentElement.classList.remove('no-style');
-    }
-  </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
   <script src="../js/stats.js"></script>
 </head>
 <body>
+
+  <button id="portfolio-btn" class="portfolio-button">🚀 Launch to Portfolio</button>
+
+  <canvas id="rocket-canvas" class="rocket-canvas-hidden"></canvas>
+
   <a href="https://fixeqyt.github.io" id="stats-link">
-    <img
-      src="https://github-readme-stats.vercel.app/api?username=FixeQyt&show_icons=true&theme=transparent&border_color=C0C0C0&hide=stars&icon_color=999999&rank_icon=github"
-      alt="FixeQ's GitHub statistics"
-      id="stats-img"
-      loading="lazy"
-    />
+    <img src="https://github-readme-stats.vercel.app/api?username=FixeQyt&show_icons=true&theme=transparent&border_color=C0C0C0&hide=stars&icon_color=999999&rank_icon=github" alt="FixeQ's GitHub statistics" id="stats-img" loading="lazy" />
   </a>
 
-  <a
-    id="credits"
-    href="https://github.com/anuraghazra/github-readme-stats"
-    target="_blank"
-  >
-    powered by github-readme-stats
-  </a>
+
+  <a id="credits" href="https://github.com/anuraghazra/github-readme-stats" target="_blank">powered by github-readme-stats</a>
 </body>
 </html>

@@ -1,7 +1,7 @@
 /* GitHub Stats Page Styles */
 
 /* Base styles for normal viewing */
-html:not(.no-style) body {
+body {
   background-color: #0D1117;
   color: #fff;
   font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
@@ -16,7 +16,7 @@ html:not(.no-style) body {
 }
 
 /* Stats container */
-html:not(.no-style) #stats-link {
+#stats-link {
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   border-radius: 12px;
   display: inline-block;
@@ -24,7 +24,7 @@ html:not(.no-style) #stats-link {
 }
 
 /* Stats image styling */
-html:not(.no-style) img {
+img {
   border-radius: 12px;
   border: 1px solid #C0C0C0;
   max-width: 100%;
@@ -34,19 +34,19 @@ html:not(.no-style) img {
 }
 
 /* Hover effects for stats container */
-html:not(.no-style) #stats-link:hover {
+#stats-link:hover {
   transform: translateY(-5px);
   box-shadow: 0 10px 25px rgba(192, 192, 192, 0.1);
 }
 
 /* Hover effects for stats image */
-html:not(.no-style) #stats-link:hover img {
+#stats-link:hover img {
   border-color: #58A6FF;
   transform: scale(1.02);
 }
 
 /* Credits styling */
-html:not(.no-style) a#credits {
+a#credits {
   color: #999;
   font-size: 0.9em;
   margin-top: 16px;
@@ -58,56 +58,33 @@ html:not(.no-style) a#credits {
 }
 
 /* Credits hover effect */
-html:not(.no-style) a#credits:hover {
+a#credits:hover {
   opacity: 1;
   color: #C0C0C0;
   background-color: rgba(255, 255, 255, 0.05);
 }
 
-/* Focus styles for accessibility */
-html:not(.no-style) #stats-link:focus,
-html:not(.no-style) #credits:focus {
-  outline: 2px solid #58A6FF;
-  outline-offset: 2px;
-}
+
 
 /* Responsive adjustments */
 @media (max-width: 768px) {
-  html:not(.no-style) body {
+  body {
     padding: 16px;
   }
   
-  html:not(.no-style) #stats-link:hover {
+  #stats-link:hover {
     transform: translateY(-3px);
   }
   
-  html:not(.no-style) #stats-link:hover img {
+  #stats-link:hover img {
     transform: scale(1.01);
   }
 }
 
-/* Animation for page load */
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
 
-html:not(.no-style) #stats-link {
-  animation: fadeInUp 0.6s ease-out;
-}
-
-html:not(.no-style) #credits {
-  animation: fadeInUp 0.6s ease-out 0.2s both;
-}
 
 /* Subtle glow effect on hover */
-html:not(.no-style) #stats-link:hover::before {
+#stats-link:hover::before {
   content: '';
   position: absolute;
   top: -2px;
@@ -122,7 +99,70 @@ html:not(.no-style) #stats-link:hover::before {
   animation: rotate 3s linear infinite;
 }
 
-html:not(.no-style) #stats-link {
+#stats-link {
   position: relative;
   z-index: 1;
 }
+
+/* Portfolio Button Styles */
+.portfolio-button {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border: none;
+  border-radius: 12px;
+  color: white;
+  font-size: 1.1rem;
+  font-weight: 600;
+  padding: 12px 24px;
+  margin-bottom: 30px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+  position: relative;
+  overflow: hidden;
+}
+
+.portfolio-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(102, 126, 234, 0.6);
+}
+
+.portfolio-button:active {
+  transform: translateY(0);
+}
+
+.portfolio-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+  transition: left 0.5s;
+}
+
+.portfolio-button:hover::before {
+  left: 100%;
+}
+
+/* Three.js Canvas Styles */
+#rocket-canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 1000;
+  pointer-events: none;
+  background: transparent;
+}
+
+.rocket-canvas-hidden {
+  display: none;
+}
+
+.rocket-canvas-visible {
+  display: block;
+}
+
+

@@ -1,0 +1,137 @@
+/* GitHub Stats Page Styles */
+
+/* Base styles for normal viewing */
+html:not(.no-style) body {
+  background-color: #0D1117;
+  color: #fff;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+  flex-direction: column;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+/* Stats container */
+html:not(.no-style) #stats-link {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border-radius: 12px;
+  display: inline-block;
+  text-decoration: none;
+}
+
+/* Stats image styling */
+html:not(.no-style) img {
+  border-radius: 12px;
+  border: 1px solid #C0C0C0;
+  max-width: 100%;
+  height: auto;
+  display: block;
+  transition: border-color 0.3s ease, transform 0.2s ease;
+}
+
+/* Hover effects for stats container */
+html:not(.no-style) #stats-link:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px rgba(192, 192, 192, 0.1);
+}
+
+/* Hover effects for stats image */
+html:not(.no-style) #stats-link:hover img {
+  border-color: #58A6FF;
+  transform: scale(1.02);
+}
+
+/* Credits styling */
+html:not(.no-style) a#credits {
+  color: #999;
+  font-size: 0.9em;
+  margin-top: 16px;
+  text-decoration: none;
+  opacity: 0.8;
+  transition: opacity 0.3s ease, color 0.3s ease;
+  padding: 8px 12px;
+  border-radius: 6px;
+}
+
+/* Credits hover effect */
+html:not(.no-style) a#credits:hover {
+  opacity: 1;
+  color: #C0C0C0;
+  background-color: rgba(255, 255, 255, 0.05);
+}
+
+/* Focus styles for accessibility */
+html:not(.no-style) #stats-link:focus,
+html:not(.no-style) #credits:focus {
+  outline: 2px solid #58A6FF;
+  outline-offset: 2px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  html:not(.no-style) body {
+    padding: 16px;
+  }
+  
+  html:not(.no-style) #stats-link:hover {
+    transform: translateY(-3px);
+  }
+  
+  html:not(.no-style) #stats-link:hover img {
+    transform: scale(1.01);
+  }
+}
+
+/* Animation for page load */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+html:not(.no-style) #stats-link {
+  animation: fadeInUp 0.6s ease-out;
+}
+
+html:not(.no-style) #credits {
+  animation: fadeInUp 0.6s ease-out 0.2s both;
+}
+
+/* Subtle glow effect on hover */
+html:not(.no-style) #stats-link:hover::before {
+  content: '';
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  background: linear-gradient(45deg, #58A6FF, #7C3AED, #F97316, #58A6FF);
+  border-radius: 14px;
+  opacity: 0.3;
+  z-index: -1;
+  filter: blur(8px);
+  animation: rotate 3s linear infinite;
+}
+
+@keyframes rotate {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+html:not(.no-style) #stats-link {
+  position: relative;
+  z-index: 1;
+}

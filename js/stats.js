@@ -26,6 +26,23 @@ class GitHubStatsPage {
   
   launchRocket() {
     console.log('🚀 Launching rocket to portfolio!');
+    // Preconnect/preload portfolio resources for faster load
+    const head = document.head;
+    if (!document.getElementById('portfolio-preconnect')) {
+      const preconnect = document.createElement('link');
+      preconnect.rel = 'preconnect';
+      preconnect.href = 'https://fixeqyt.github.io';
+      preconnect.id = 'portfolio-preconnect';
+      head.appendChild(preconnect);
+    }
+    if (!document.getElementById('portfolio-preload')) {
+      const preload = document.createElement('link');
+      preload.rel = 'preload';
+      preload.as = 'document';
+      preload.href = 'https://fixeqyt.github.io/';
+      preload.id = 'portfolio-preload';
+      head.appendChild(preload);
+    }
     
     
     const portfolioBtn = document.getElementById('portfolio-btn');
@@ -452,9 +469,7 @@ class GitHubStatsPage {
     console.log('🌟 Rocket launched! Smoke covering screen, redirecting...');
 
     
-    setTimeout(() => {
-      window.location.href = 'https://fixeqyt.github.io';
-    }, 500);
+    window.location.href = 'https://fixeqyt.github.io';
   }
 
   

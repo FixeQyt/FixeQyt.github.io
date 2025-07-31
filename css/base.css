@@ -355,3 +355,8 @@ section {
 .opacity-0 { opacity: 0; }
 .opacity-50 { opacity: 0.5; }
 .opacity-100 { opacity: 1; }
+
+.stop-scrolling {
+  height: 100%;
+  overflow: hidden;
+}

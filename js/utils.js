@@ -221,7 +221,7 @@ class LoadingManager {
         this.callbacks = [];
         this.progressElement = null;
         this.statusElement = null;
-        this.maxLoadingTime = 5000; // 5 seconds timeout
+        this.maxLoadingTime = 10000; // 10 seconds timeout
         
         this.init();
     }
@@ -587,6 +587,7 @@ window.loadingManager = new LoadingManager();
 
 // Loading screen handler
 const showLoadingScreen = () => {
+    document.body.classList.add('stop-scrolling');
     const loadingScreen = $('#loading-screen');
     if (loadingScreen) {
         loadingScreen.style.display = 'flex';
@@ -594,6 +595,7 @@ const showLoadingScreen = () => {
 };
 
 const hideLoadingScreen = () => {
+    document.body.classList.remove('stop-scrolling');
     const loadingScreen = $('#loading-screen');
     if (loadingScreen) {
         setTimeout(() => {

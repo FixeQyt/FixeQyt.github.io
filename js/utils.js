@@ -605,6 +605,8 @@ const hideLoadingScreen = () => {
             }, 500);
         }, 300);
     }
+    // Remove stop-scrolling class after hiding loading screen
+    document.body.classList.remove('stop-scrolling');
 };
 
 // Local storage utilities

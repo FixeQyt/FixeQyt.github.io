@@ -256,12 +256,31 @@ section {
     left: 0;
     width: 100%;
     height: 100%;
-    background: var(--bg-primary);
+    background: transparent;
     display: flex;
     align-items: center;
     justify-content: center;
     z-index: var(--z-loading);
     transition: opacity var(--transition-slow);
+}
+
+.loading-blur-bg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 0;
+    pointer-events: none;
+    background: rgba(10,10,15,0.25); /* delikatne przyciemnienie */
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+}
+
+.loading-container {
+    position: relative;
+    z-index: 1;
+    background: none;
 }
 
 .loading-container {

@@ -255,39 +255,46 @@ class PortfolioApp {
 
     handleLoadingError(error) {
         console.error('Failed to load portfolio:', error);
-        
-        // Hide loading screen
-        utils.hideLoadingScreen();
-        
-        // Show error message
-        const errorMessage = utils.createElement('div', {
-            className: 'error-message',
-            style: `
-                position: fixed;
+
+        // Show error message on loading screen (do not hide it)
+        const loadingScreen = document.getElementById('loading-screen');
+        if (loadingScreen) {
+            // Remove previous error if any
+            const prevError = loadingScreen.querySelector('.loading-error-message');
+            if (prevError) prevError.remove();
+
+            // Add error message overlay
+            const errorDiv = document.createElement('div');
+            errorDiv.className = 'loading-error-message';
+            errorDiv.style.cssText = `
+                position: absolute;
                 top: 50%;
                 left: 50%;
                 transform: translate(-50%, -50%);
-                background: var(--bg-card);
-                border: var(--border-glass);
-                border-radius: var(--radius-lg);
-                padding: var(--spacing-lg);
+                background: var(--bg-card, #181824ee);
+                border: var(--border-glass, 1px solid #444);
+                border-radius: var(--radius-lg, 16px);
+                padding: var(--spacing-lg, 2rem);
                 text-align: center;
-                z-index: 9999;
-            `,
-            innerHTML: `
-                <h3 style="color: var(--accent-secondary); margin-bottom: var(--spacing-sm);">
+                z-index: 10001;
+                box-shadow: 0 4px 32px #0008;
+                color: var(--text-secondary, #fff);
+                min-width: 260px;
+                max-width: 90vw;
+            `;
+            errorDiv.innerHTML = `
+                <h3 style="color: var(--accent-secondary, #ff4e6a); margin-bottom: 1rem;">
                     Oops! Something went wrong
                 </h3>
-                <p style="color: var(--text-secondary); margin-bottom: var(--spacing-md);">
-                    Failed to load portfolio data. Please refresh the page to try again.
+                <p style="margin-bottom: 1.5rem;">
+                    Failed to load portfolio data.<br>Check your connection or try again.
                 </p>
                 <button class="btn btn-primary" onclick="window.location.reload()">
                     Refresh Page
                 </button>
-            `
-        });
-        
-        document.body.appendChild(errorMessage);
+            `;
+            loadingScreen.appendChild(errorDiv);
+        }
     }
 
     onPageHidden() {

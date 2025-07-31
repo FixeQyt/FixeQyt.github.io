@@ -285,11 +285,18 @@ class LoadingManager {
     }
     
     trackImages() {
-        // Find all images in HTML and CSS
-        const images = document.querySelectorAll('img');
-        const backgroundImages = [];
-        
-        // Check for CSS background images
+        // Find all images in HTML (including dynamically added later)
+        const images = Array.from(document.images);
+        const trackedSrc = new Set();
+
+        images.forEach(img => {
+            if (img.src && !img.src.startsWith('data:') && !trackedSrc.has(img.src)) {
+                this.addResource('image', img.src, img);
+                trackedSrc.add(img.src);
+            }
+        });
+
+        // Track CSS background images
         const elements = document.querySelectorAll('*');
         elements.forEach(el => {
             const style = window.getComputedStyle(el);
@@ -299,28 +306,51 @@ class LoadingManager {
                 if (matches) {
                     matches.forEach(match => {
                         const url = match.match(/url\(['"]?([^'")]+)['"]?\)/)[1];
-                        if (!url.startsWith('data:')) {
-                            backgroundImages.push(url);
+                        if (!url.startsWith('data:') && !trackedSrc.has(url)) {
+                            this.addResource('background-image', url);
+                            trackedSrc.add(url);
                         }
                     });
                 }
             }
         });
-        
-        // Track regular images
-        images.forEach(img => {
-            if (img.src && !img.src.startsWith('data:')) {
-                this.addResource('image', img.src, img);
-            }
-        });
-        
-        // Track background images
-        backgroundImages.forEach(src => {
-            this.addResource('background-image', src);
-        });
-        
-        // Track avatar image and project images from data
-        this.addResource('image', 'assets/avatar.jpg');
+
+        // Track avatar image (if not already tracked)
+        if (!trackedSrc.has('assets/avatar.jpg')) {
+            this.addResource('image', 'assets/avatar.jpg');
+        }
+
+        // Observe DOM for dynamically added images
+        if (!this._imageObserver) {
+            this._imageObserver = new MutationObserver(mutations => {
+                mutations.forEach(mutation => {
+                    mutation.addedNodes.forEach(node => {
+                        if (node.tagName === 'IMG' && node.src && !node.src.startsWith('data:') && !trackedSrc.has(node.src)) {
+                            this.addResource('image', node.src, node);
+                            trackedSrc.add(node.src);
+                        }
+                        // Check for background images in new elements
+                        if (node.nodeType === 1) {
+                            const style = window.getComputedStyle(node);
+                            const bgImage = style.backgroundImage;
+                            if (bgImage && bgImage !== 'none' && bgImage.includes('url(')) {
+                                const matches = bgImage.match(/url\(['"]?([^'")]+)['"]?\)/g);
+                                if (matches) {
+                                    matches.forEach(match => {
+                                        const url = match.match(/url\(['"]?([^'")]+)['"]?\)/)[1];
+                                        if (!url.startsWith('data:') && !trackedSrc.has(url)) {
+                                            this.addResource('background-image', url);
+                                            trackedSrc.add(url);
+                                        }
+                                    });
+                                }
+                            }
+                        }
+                    });
+                });
+            });
+            this._imageObserver.observe(document.body, { childList: true, subtree: true });
+        }
     }
     
     trackFonts() {
@@ -464,12 +494,17 @@ class LoadingManager {
     updateProgress() {
         const progress = this.totalResources > 0 ? 
             Math.min(100, (this.loadedResources / this.totalResources) * 100) : 0;
-        
+
         if (this.progressElement) {
             this.progressElement.style.width = `${progress}%`;
         }
-        
-        this.updateStatus(`Loading... ${Math.round(progress)}%`);
+
+        // Show percent and resource count in status
+        let statusText = `Loading... ${Math.round(progress)}%`;
+        if (this.totalResources > 0) {
+            statusText += ` (${this.loadedResources}/${this.totalResources})`;
+        }
+        this.updateStatus(statusText);
     }
     
     updateStatus(status) {

@@ -1,0 +1,14 @@
+User-agent: *
+Allow: /
+Sitemap: https://fixeqyt.github.io/sitemap.xml
+Crawl-delay: 1
+Allow: /css/
+Allow: /js/
+Allow: /assets/
+Allow: /data/
+Allow: /stats/
+Disallow: /sw.js
+Disallow: /*.json$
+Disallow: /manifest.json
+Disallow: /.*
+Host: fixeqyt.github.io

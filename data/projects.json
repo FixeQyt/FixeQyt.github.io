@@ -1,22 +1,33 @@
 {
-  "underConstruction": false,
-  "projects": [
+  "underConstruction": true,
+  "constructionMessage": "Projects section is currently under development. New exciting projects coming soon!",
+  "projects": [],
+  "categories": [
     {
-      "id": 1,
-      "title": "SamFirmUpdater",
-      "description": "Alternative to original Samsung updater but it's for rooted devices. It allows users to download and decrypt original Samsung firmware, patch it (change kernel and patch vbmeta) and flash it to their devices.",
-      "image": "assets/projects/SamFirmUpdater/banner.png",
-      "technologies": ["Java", "Kotlin"],
-      "category": "Mobile",
-      "status": "In Progress",
-      "demoUrl": "#",
-      "githubUrl": "https://github.com/FixeQyt/SamFirmUpdater",
-      "features": [
-        "Download Samsung firmware",
-        "Decrypt original firmware",
-        "Patch firmware (change kernel and patch vbmeta)",
-        "Flash firmware to rooted devices"
-      ]
+      "name": "all",
+      "label": "All Projects",
+      "count": 0
+    },
+    {
+      "name": "frontend",
+      "label": "Frontend",
+      "count": 0
+    },
+    {
+      "name": "full-stack",
+      "label": "Full Stack",
+      "count": 0
+    },
+    {
+      "name": "mobile",
+      "label": "Mobile",
+      "count": 0
     }
-  ]
+  ],
+  "stats": {
+    "totalProjects": 0,
+    "completedProjects": 0,
+    "inProgressProjects": 0,
+    "technologies": []
+  }
 }

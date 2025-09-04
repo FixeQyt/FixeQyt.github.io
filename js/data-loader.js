@@ -1,25 +1,16 @@
-// Data loader module for fetching and managing portfolio data
-
 class DataLoader {
     constructor() {
         this.cache = new Map();
         this.loadingStates = new Map();
     }
-
-    // Generic fetch function with caching
     async fetchData(url, useCache = true) {
         try {
-            // Check cache first
             if (useCache && this.cache.has(url)) {
                 return this.cache.get(url);
             }
-
-            // Check if already loading
             if (this.loadingStates.has(url)) {
                 return this.loadingStates.get(url);
             }
-
-            // Create loading promise
             const loadingPromise = fetch(url)
                 .then(response => {
                     if (!response.ok) {
@@ -36,20 +27,15 @@ class DataLoader {
                     this.loadingStates.delete(url);
                     throw error;
                 });
-
             this.loadingStates.set(url, loadingPromise);
             return loadingPromise;
-
         } catch (error) {
             utils.errorHandler(error, 'DataLoader.fetchData');
             throw error;
         }
     }
-
-    // Load developer data
     async loadDeveloperData() {
         const trackLoading = window.loadingManager?.trackDataLoading('developer-data');
-        
         try {
             const data = await this.fetchData('./data/data.json');
             trackLoading?.(true);
@@ -58,21 +44,14 @@ class DataLoader {
             console.error('Failed to load developer data:', error);
             utils.errorHandler(error, 'DataLoader.loadDeveloperData');
             trackLoading?.(false);
-            // Return fallback data
             return this.getFallbackDeveloperData();
         }
     }
-
-    // Load projects data
     async loadProjectsData() {
         const trackLoading = window.loadingManager?.trackDataLoading('projects-data');
-        
         try {
-            // Add timestamp to avoid caching issues during development
             const url = './data/projects.json?t=' + Date.now();
-            const data = await this.fetchData(url, false); // Disable cache for projects
-            
-            // Track project images for loading manager
+            const data = await this.fetchData(url, false); 
             if (data.projects && window.loadingManager) {
                 data.projects.forEach(project => {
                     if (project.image) {
@@ -80,22 +59,18 @@ class DataLoader {
                     }
                 });
             }
-            
             trackLoading?.(true);
-            return data; // Return full data object including underConstruction flag
+            return data; 
         } catch (error) {
             console.error('Failed to load projects data:', error);
             utils.errorHandler(error, 'DataLoader.loadProjectsData');
             trackLoading?.(false);
-            // Return fallback data
             return { 
                 underConstruction: false, 
                 projects: this.getFallbackProjectsData() 
             };
         }
     }
-
-    // Fallback developer data
     getFallbackDeveloperData() {
         return {
             developer: {
@@ -127,14 +102,12 @@ class DataLoader {
                 }
             ],
             socials: [
-                { name: "GitHub", url: "https://github.com/fixeq", icon: "github", color: "#00D9FF" },
-                { name: "Threads", url: "https://threads.net/@fixeq", icon: "threads", color: "#FF0080" },
-                { name: "Instagram", url: "https://instagram.com/fixeq", icon: "instagram", color: "#E4405F" }
+                { name: "GitHub", url: "https://github.com/FixeQyt" },
+                { name: "Threads", url: "https://threads.com/@fixeq.dev" },
+                { name: "Instagram", url: "https://instagram.com/fixeq.dev" }
             ]
         };
     }
-
-    // Fallback projects data
     getFallbackProjectsData() {
         return [
             {
@@ -151,21 +124,16 @@ class DataLoader {
             }
         ];
     }
-
-    // Clear cache
     clearCache() {
         this.cache.clear();
         this.loadingStates.clear();
     }
-
-    // Preload all data
     async preloadAllData() {
         try {
             const [developerData, projectsData] = await Promise.all([
                 this.loadDeveloperData(),
                 this.loadProjectsData()
             ]);
-
             return {
                 developer: developerData,
                 projects: projectsData
@@ -176,11 +144,7 @@ class DataLoader {
         }
     }
 }
-
-// Create global instance
 window.dataLoader = new DataLoader();
-
-// Data management functions
 const dataManager = {
     data: {
         developer: null,
@@ -188,99 +152,66 @@ const dataManager = {
         skills: null,
         socials: null
     },
-
-    // Initialize all data
     async init() {
         try {
             utils.performanceMonitor.mark('data-load-start');
-            
             const allData = await window.dataLoader.preloadAllData();
-            
             this.data.developer = allData.developer.developer;
             this.data.skills = allData.developer.skills;
             this.data.socials = allData.developer.socials;
             this.data.projects = allData.projects.projects || allData.projects;
-            this.data.projectsData = allData.projects; // Store full projects data object
-            
+            this.data.projectsData = allData.projects; 
             utils.performanceMonitor.mark('data-load-end');
             utils.performanceMonitor.measure('data-load-time', 'data-load-start', 'data-load-end');
-            
             return this.data;
         } catch (error) {
             utils.errorHandler(error, 'dataManager.init');
             throw error;
         }
     },
-
-    // Get developer info
     getDeveloper() {
         return this.data.developer;
     },
-
-    // Get skills by category
     getSkillsByCategory(category) {
         if (!this.data.skills) return [];
-        
         const skillCategory = this.data.skills.find(cat => 
             cat.category.toLowerCase() === category.toLowerCase()
         );
-        
         return skillCategory ? skillCategory.technologies : [];
     },
-
-    // Get all skills
     getAllSkills() {
         return this.data.skills || [];
     },
-
-    // Get projects by category
     getProjectsByCategory(category) {
         if (!this.data.projects) return [];
-        
         if (category === 'all') return this.data.projects;
-        
         return this.data.projects.filter(project => 
             project.category.toLowerCase().replace(' ', '-') === category.toLowerCase()
         );
     },
-
-    // Get project by ID
     getProjectById(id) {
         if (!this.data.projects) return null;
-        
         return this.data.projects.find(project => project.id === parseInt(id));
     },
-
-    // Get social links
     getSocials() {
         return this.data.socials || [];
     },
-
-    // Search projects
     searchProjects(query) {
         if (!this.data.projects || !query) return this.data.projects;
-        
         const searchTerm = query.toLowerCase();
-        
         return this.data.projects.filter(project => 
             project.title.toLowerCase().includes(searchTerm) ||
             project.description.toLowerCase().includes(searchTerm) ||
             project.technologies.some(tech => tech.toLowerCase().includes(searchTerm))
         );
     },
-
-    // Get project categories
     getProjectCategories() {
         if (!this.data.projects) return [];
-        
         const categories = [...new Set(this.data.projects.map(project => project.category))];
         return ['All', ...categories];
     },
-
-    // Get technology list
     getAllTechnologies() {
         const technologies = new Set();
-        
         if (this.data.skills) {
             this.data.skills.forEach(category => {
                 category.technologies.forEach(tech => {
@@ -288,7 +219,6 @@ const dataManager = {
                 });
             });
         }
-        
         if (this.data.projects) {
             this.data.projects.forEach(project => {
                 project.technologies.forEach(tech => {
@@ -296,30 +226,21 @@ const dataManager = {
                 });
             });
         }
-        
         return Array.from(technologies);
     },
-
-    // Update data (for future real-time updates)
     updateData(type, newData) {
         if (this.data.hasOwnProperty(type)) {
             this.data[type] = newData;
             this.notifyDataChanged(type, newData);
         }
     },
-
-    // Event system for data changes
     listeners: new Map(),
-
-    // Add data change listener
     addListener(type, callback) {
         if (!this.listeners.has(type)) {
             this.listeners.set(type, []);
         }
         this.listeners.get(type).push(callback);
     },
-
-    // Remove data change listener
     removeListener(type, callback) {
         if (this.listeners.has(type)) {
             const callbacks = this.listeners.get(type);
@@ -329,8 +250,6 @@ const dataManager = {
             }
         }
     },
-
-    // Notify listeners of data changes
     notifyDataChanged(type, data) {
         if (this.listeners.has(type)) {
             this.listeners.get(type).forEach(callback => {
@@ -343,6 +262,4 @@ const dataManager = {
         }
     }
 };
-
-// Export data manager
 window.dataManager = dataManager;

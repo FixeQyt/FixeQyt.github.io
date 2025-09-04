@@ -1,0 +1,57 @@
+{
+  "name": "FixeQ - Paweł Sobczak | Full Stack Developer",
+  "short_name": "FixeQ Portfolio",
+  "description": "Personal portfolio of Paweł Sobczak (FixeQ) - Full Stack Developer specializing in modern web technologies, mobile development, and Linux systems.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0a0a0f",
+  "theme_color": "#4a9eff",
+  "orientation": "portrait-primary",
+  "scope": "/",
+  "lang": "en-US",
+  "dir": "ltr",
+  "categories": ["productivity", "developer-tools", "portfolio"],
+  "shortcuts": [
+    {
+      "name": "Projects",
+      "short_name": "Projects",
+      "description": "View my latest projects",
+      "url": "/#projects",
+      "icons": [{ "src": "assets/icons/shortcut-projects.png", "sizes": "96x96" }]
+    },
+    {
+      "name": "Skills",
+      "short_name": "Skills",
+      "description": "Explore my technical skills",
+      "url": "/#skills",
+      "icons": [{ "src": "assets/icons/shortcut-skills.png", "sizes": "96x96" }]
+    },
+    {
+      "name": "Contact",
+      "short_name": "Contact",
+      "description": "Get in touch with me",
+      "url": "/#contact",
+      "icons": [{ "src": "assets/icons/shortcut-contact.png", "sizes": "96x96" }]
+    },
+    {
+      "name": "GitHub Stats",
+      "short_name": "Stats",
+      "description": "View my GitHub statistics",
+      "url": "/stats/",
+      "icons": [{ "src": "assets/icons/shortcut-stats.png", "sizes": "96x96" }]
+    }
+  ],
+  "related_applications": [
+    {
+      "platform": "web",
+      "url": "https://fixeqyt.github.io"
+    }
+  ],
+  "prefer_related_applications": false,
+  "edge_side_panel": {
+    "preferred_width": 400
+  },
+  "launch_handler": {
+    "client_mode": "focus-existing"
+  }
+}

@@ -2,21 +2,26 @@
   "developer": {
     "name": "Paweł Sobczak",
     "nickname": "FixeQ",
-    "title": "Full Stack Developer",
+    "title": "Full Stack Developer & Linux Enthusiast",
     "tagline": "Crafting Digital Experiences with Code",
-    "description": "Passionate full-stack developer specializing in modern web technologies, mobile development, and creating innovative digital solutions. I love working with cutting-edge frameworks and building applications that make a difference.",
+    "description": "Passionate full-stack developer specializing in modern web technologies, mobile development, and creating innovative digital solutions. I love working with cutting-edge frameworks and building applications that make a difference. My expertise spans from frontend technologies like JavaScript and CSS to backend systems and mobile app development.",
     "avatar": "assets/avatar.jpg",
-    "location": "Arch Linux Enthusiast",
+    "location": "Poland • Arch Linux Enthusiast",
     "experience": "3+ Years",
     "projectsCompleted": "25+",
-    "technologiesMastered": "5+"
+    "technologiesMastered": "15+",
+    "githubStats": {
+      "repositories": "25+",
+      "contributions": "500+",
+      "followers": "10+"
+    }
   },
   "skills": [
     {
-      "category": "Frontend",
+      "category": "Frontend Development",
       "technologies": [
         {
-          "name": "JavaScript",
+          "name": "JavaScript ES6+",
           "level": 95,
           "icon": "⚡",
           "color": "#F7DF1E"
@@ -28,15 +33,27 @@
           "color": "#E34F26"
         },
         {
-          "name": "CSS3",
+          "name": "CSS3 & Sass",
           "level": 88,
           "icon": "🎨",
           "color": "#1572B6"
+        },
+        {
+          "name": "React.js",
+          "level": 85,
+          "icon": "⚛️",
+          "color": "#61DAFB"
+        },
+        {
+          "name": "TypeScript",
+          "level": 82,
+          "icon": "🔷",
+          "color": "#3178C6"
         }
       ]
     },
     {
-      "category": "Backend",
+      "category": "Backend Development",
       "technologies": [
         {
           "name": "Node.js",
@@ -49,22 +66,46 @@
           "level": 85,
           "icon": "🐍",
           "color": "#3776AB"
+        },
+        {
+          "name": "Express.js",
+          "level": 90,
+          "icon": "🛠️",
+          "color": "#000000"
+        },
+        {
+          "name": "MongoDB",
+          "level": 78,
+          "icon": "🍃",
+          "color": "#47A248"
         }
       ]
     },
     {
-      "category": "Mobile",
+      "category": "Mobile Development",
       "technologies": [
         {
           "name": "Java (Android)",
           "level": 80,
           "icon": "📱",
           "color": "#007396"
+        },
+        {
+          "name": "Kotlin",
+          "level": 75,
+          "icon": "🎯",
+          "color": "#7F52FF"
+        },
+        {
+          "name": "Android Studio",
+          "level": 78,
+          "icon": "🤖",
+          "color": "#3DDC84"
         }
       ]
     },
     {
-      "category": "Tools & OS",
+      "category": "Tools & DevOps",
       "technologies": [
         {
           "name": "Arch Linux",
@@ -73,10 +114,22 @@
           "color": "#1793D1"
         },
         {
-          "name": "Git",
+          "name": "Git & GitHub",
           "level": 85,
           "icon": "📦",
           "color": "#F05032"
+        },
+        {
+          "name": "Docker",
+          "level": 70,
+          "icon": "🐳",
+          "color": "#2496ED"
+        },
+        {
+          "name": "VS Code",
+          "level": 95,
+          "icon": "💻",
+          "color": "#007ACC"
         }
       ]
     }
@@ -86,19 +139,44 @@
       "name": "GitHub",
       "url": "https://github.com/FixeQyt",
       "icon": "github",
-      "color": "#00D9FF"
+      "color": "#00D9FF",
+      "description": "Check out my open source projects and contributions"
     },
     {
       "name": "Threads",
       "url": "https://threads.com/@fixeq.dev",
       "icon": "threads",
-      "color": "#FF0080"
+      "color": "#FF0080",
+      "description": "Follow me for tech updates and insights"
     },
     {
       "name": "Instagram",
       "url": "https://instagram.com/fixeq.dev",
       "icon": "instagram",
-      "color": "#E4405F"
+      "color": "#E4405F",
+      "description": "Behind the scenes of my development journey"
+    }
+  ],
+  "achievements": [
+    {
+      "title": "Self-taught Developer",
+      "description": "Built expertise through continuous learning and hands-on projects",
+      "icon": "🎓"
+    },
+    {
+      "title": "Open Source Contributor",
+      "description": "Active contributor to various open source projects on GitHub",
+      "icon": "🌟"
+    },
+    {
+      "title": "Linux Power User",
+      "description": "Advanced user of Arch Linux with deep system knowledge",
+      "icon": "🐧"
+    },
+    {
+      "title": "Problem Solver",
+      "description": "Passionate about solving complex technical challenges",
+      "icon": "🧩"
     }
   ]
 }

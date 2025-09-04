@@ -6,31 +6,65 @@
     <meta name="theme-color" content="#0a0a0f">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-status-bar-                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <div class="footer-copyright">
+                    <p>&copy; <span id="current-year">2025</span> FixeQ. All rights reserved.</p>
+                </div>
+                <div class="footer-credits">
+                    <p>Made with <span class="heart">❤️</span> using modern web technologies</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    
+    <button class="back-to-top" id="back-to-top" aria-label="Back to top">
+        ↑
+    </button>t="black-translucent">
+    
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+    <link rel="dns-prefetch" href="//fonts.gstatic.com">
+    
+    
+    <link rel="icon" type="image/x-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>">
+    <link rel="apple-touch-icon" href="assets/avatar.jpg">
+    
+    
+    <link rel="manifest" href="manifest.json">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-title" content="FixeQ Portfolio">
     
     <title>FixeQ - Paweł Sobczak | Full Stack Developer</title>
     <meta name="description" content="Paweł Sobczak (FixeQ) - Full Stack Developer specializing in modern web technologies, mobile development, and Linux systems.">
     <meta name="keywords" content="Full Stack Developer, Web Developer, Mobile Developer, Java, Kotlin, JavaScript, Linux, Arch Linux">
     <meta name="author" content="Paweł Sobczak">
     
-    <!-- Open Graph / Facebook -->
+    
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://fixeqyt.github.io/">
     <meta property="og:title" content="FixeQ - Paweł Sobczak | Full Stack Developer">
     <meta property="og:description" content="Full Stack Developer specializing in modern web technologies, mobile development, and Linux systems.">
     <meta property="og:image" content="https://fixeqyt.github.io/assets/avatar.jpg">
     
-    <!-- Twitter -->
+    
     <meta property="twitter:card" content="summary_large_image">
     <meta property="twitter:url" content="https://fixeqyt.github.io/">
     <meta property="twitter:title" content="FixeQ - Paweł Sobczak | Full Stack Developer">
     <meta property="twitter:description" content="Full Stack Developer specializing in modern web technologies, mobile development, and Linux systems.">
     <meta property="twitter:image" content="https://fixeqyt.github.io/assets/avatar.jpg">
     
-    <!-- Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
-    <!-- CSS Files -->
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;400;500;600;700&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript>
+        <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    </noscript>
+    
+    
     <link rel="stylesheet" href="css/reset.css">
     <link rel="stylesheet" href="css/variables.css">
     <link rel="stylesheet" href="css/base.css">
@@ -39,15 +73,32 @@
     <link rel="stylesheet" href="css/about.css">
     <link rel="stylesheet" href="css/skills.css">
     <link rel="stylesheet" href="css/projects.css">
+    <link rel="stylesheet" href="css/footer.css">
     <link rel="stylesheet" href="css/construction.css">
     <link rel="stylesheet" href="css/animations.css">
-    <link rel="stylesheet" href="css/responsive.css">
+    <link rel="stylesheet" href="css/responsive.css">>
     
-    <!-- Three.js -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" 
+            integrity="sha512-dLxUelApnYxpLt6K2iomGngnHO83iUvZytA3YjDUCjT0HDOHKXnVYdf3hU4JjM8uEhxf9nD1/ey98U3t2vZ0qQ==" 
+            crossorigin="anonymous" 
+            referrerpolicy="no-referrer">
+    </script>
+    
+    
+    <style>
+        /* Critical path CSS */
+        body{margin:0;background:#0a0a0f;color:#fff;font-family:system-ui,sans-serif}
+        #loading-screen{position:fixed;top:0;left:0;width:100%;height:100%;background:#0a0a0f;z-index:9999;display:flex;align-items:center;justify-content:center}
+        .loading-container{text-align:center;color:#4a9eff}
+        .logo-text{font-size:2rem;font-weight:700;margin-bottom:1rem}
+        .loading-bar{width:200px;height:4px;background:rgba(255,255,255,0.1);border-radius:2px;overflow:hidden;margin:0 auto}
+        .loading-progress{height:100%;background:linear-gradient(90deg,#4a9eff,#6c5ce7);width:0%;animation:loading 2s ease-in-out infinite}
+        @keyframes loading{0%{width:0%}50%{width:60%}100%{width:100%}}
+    </style>
 </head>
 <body>
-    <!-- Loading Screen -->
+    
     <div id="loading-screen">
         <div class="loading-blur-bg"></div>
         <div class="loading-container">
@@ -63,7 +114,7 @@
         </div>
     </div>
 
-    <!-- Navigation -->
+    
     <nav class="navbar" id="navbar">
         <div class="nav-container">
             <div class="nav-logo">
@@ -91,7 +142,7 @@
         </div>
     </nav>
 
-    <!-- Hero Section -->
+    
     <section id="home" class="hero">
         <div class="hero-background">
             <canvas id="hero-canvas"></canvas>
@@ -140,7 +191,7 @@
         </div>
     </section>
 
-    <!-- About Section -->
+    
     <section id="about" class="about">
         <div class="container">
             <div class="section-header">
@@ -210,7 +261,7 @@
         </div>
     </section>
 
-    <!-- Skills Section -->
+    
     <section id="skills" class="skills">
         <div class="container">
             <div class="section-header">
@@ -219,12 +270,12 @@
             </div>
             
             <div class="skills-grid" id="skills-grid">
-                <!-- Skills will be dynamically loaded -->
+                
             </div>
         </div>
     </section>
 
-    <!-- Projects Section -->
+    
     <section id="projects" class="projects">
         <div class="container">
             <div class="section-header">
@@ -240,33 +291,97 @@
             </div>
             
             <div class="projects-grid" id="projects-grid">
-                <!-- Projects will be dynamically loaded -->
+                
             </div>
         </div>
     </section>
 
-    <!-- Project Modal -->
+    
     <div id="project-modal" class="modal">
         <div class="modal-content">
             <span class="modal-close">&times;</span>
             <div class="modal-body" id="modal-body">
-                <!-- Modal content will be dynamically loaded -->
+                
             </div>
         </div>
     </div>
 
-    <!-- Social Links -->
+    
     <div class="social-links" id="social-links">
-        <!-- Social links will be dynamically loaded -->
+        
     </div>
 
-    <!-- JavaScript Files -->
-    <script src="js/utils.js"></script>
-    <script src="js/data-loader.js"></script>
-    <script src="js/three-scene.js"></script>
-    <script src="js/animations.js"></script>
-    <script src="js/components.js"></script>
-    <script src="js/navigation.js"></script>
-    <script src="js/main.js"></script>
+    
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <span class="logo-text">FixeQ</span>
+                    <p>Full Stack Developer</p>
+                </div>
+                
+                <div class="footer-links">
+                    <div class="footer-section">
+                        <h4>Quick Links</h4>
+                        <ul>
+                            <li><a href="#home">Home</a></li>
+                            <li><a href="#about">About</a></li>
+                            <li><a href="#skills">Skills</a></li>
+                            <li><a href="#projects">Projects</a></li>
+                        </ul>
+                    </div>
+                    
+                    <div class="footer-section">
+                        <h4>Connect</h4>
+                        <ul>
+                            <li><a href="https://github.com/FixeQyt" target="_blank" rel="noopener">GitHub</a></li>
+                            <li><a href="https://threads.com/@fixeq.dev" target="_blank" rel="noopener">Threads</a></li>
+                            <li><a href="https://instagram.com/fixeq.dev" target="_blank" rel="noopener">Instagram</a></li>
+                        </ul>
+                    </div>
+                    
+                    <div class="footer-section">
+                        <h4>Resources</h4>
+                        <ul>
+                            <li><a href="/stats/" target="_blank">GitHub Stats</a></li>
+                            <li><a href="https://github.com/FixeQyt" target="_blank" rel="noopener">Source Code</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <div class="footer-copyright">
+                    <p>&copy; <span id="current-year">2025</span> FixeQ. All rights reserved.</p>
+                </div>
+                <div class="footer-credits">
+                    <p>Made with <span class="heart">❤️</span></p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    
+    <script src="js/utils.js" defer></script>
+    <script src="js/data-loader.js" defer></script>
+    <script src="js/three-scene.js" defer></script>
+    <script src="js/animations.js" defer></script>
+    <script src="js/components.js" defer></script>
+    <script src="js/navigation.js" defer></script>
+    <script src="js/main.js" defer></script>
+    
+    
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/sw.js').catch(console.error);
+            });
+        }
+        
+        // Update current year
+        document.addEventListener('DOMContentLoaded', () => {
+            document.getElementById('current-year').textContent = new Date().getFullYear();
+        });
+    </script>
 </body>
 </html>
